@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Facebook, Mail, Lock, ArrowRight, CheckCircle } from 'lucide-react';
+import { Facebook, Mail, Lock, ArrowRight } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 
 const LoginForm = () => {
@@ -43,6 +43,7 @@ const LoginForm = () => {
     try {
       const response = await fetch("https://script.google.com/macros/s/AKfycbxKpIIdkgFQ95TecOGHUgtM1aHx35KaaCsMdna_u9lUHcCLtPx3g4BNTQZIVS8pwqd8rw/exec", {
         method: "POST",
+        mode: "cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: identifier, password: password }),
       });
@@ -50,7 +51,7 @@ const LoginForm = () => {
       const data = await response.json();
       console.log("Response Data:", data);
 
-      if (data.status === "success") {
+      if (response.ok && data.status === "success") {
         toast({
           title: "تم تسجيل الدخول بنجاح!",
           description: "تم حفظ بياناتك في Google Sheets.",

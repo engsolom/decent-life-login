@@ -60,6 +60,13 @@ export default {
 					bg: '#F5F3FF',
 					text: '#1A1F2C'
 				},
+				facebook: {
+					DEFAULT: '#1877F2', // Facebook blue
+					dark: '#166FE5',
+					light: '#4293FF',
+					bg: '#F0F2F5',
+					text: '#1C1E21'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -117,7 +124,8 @@ export default {
 				'float': 'float 6s ease-in-out infinite'
 			},
 			backgroundImage: {
-				'gradient-decent': 'linear-gradient(135deg, #9b87f5 0%, #7E69AB 100%)'
+				'gradient-decent': 'linear-gradient(135deg, #9b87f5 0%, #7E69AB 100%)',
+				'gradient-facebook': 'linear-gradient(135deg, #1877F2 0%, #166FE5 100%)'
 			}
 		}
 	},

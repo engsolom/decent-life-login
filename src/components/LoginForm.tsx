@@ -22,7 +22,7 @@ const LoginForm = () => {
 
     try {
       const response = await fetch(
-        "https://api.airtable.com/appVIknwkh8pEH2er/Logins",
+        "https://airtable.com/appVIknwkh8pEH2er/tblLoaHmFwooqY5JP/viw00MA5d8KUfGDiP",
         {
           method: "POST",
           headers: {

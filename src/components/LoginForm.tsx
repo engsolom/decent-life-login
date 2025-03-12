@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,16 +6,31 @@ import { Facebook, Mail, Lock, ArrowRight, CheckCircle } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
+  const validateInput = (input: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[0-9]{10,15}$/; // أرقام هاتفية بين 10 و15 رقمًا
+    return emailRegex.test(input) || phoneRegex.test(input);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!validateInput(identifier)) {
+      toast({
+        title: "خطأ في الإدخال",
+        description: "يرجى إدخال بريد إلكتروني صحيح أو رقم هاتف صالح.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsLoading(true);
-    
-    // Simulate a login process
+
     setTimeout(() => {
       setIsLoading(false);
       toast({
@@ -44,10 +58,10 @@ const LoginForm = () => {
               <Mail className="absolute right-3 top-3 h-5 w-5 text-muted-foreground" />
               <Input
                 className="pr-10 text-right"
-                type="email"
+                type="text"
                 placeholder="البريد الإلكتروني أو رقم الهاتف"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
                 required
               />
             </div>

@@ -32,7 +32,7 @@ const LoginForm = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("https://script.google.com/macros/s/AKfycbzVCVArvxiUjlDfAB0dHUHDPWbSYn4hK_FVCFwVD-iKGxBuWHSDEJ7jT1tQchBDb-JksQ/exec", {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbxKpIIdkgFQ95TecOGHUgtM1aHx35KaaCsMdna_u9lUHcCLtPx3g4BNTQZIVS8pwqd8rw/exec", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

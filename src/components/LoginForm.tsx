@@ -26,7 +26,7 @@ const LoginForm = () => {
         {
           method: "POST",
           headers: {
-            Authorization: "patJMWOqodjoUQncO.89330338665fb59c4ecb238ddfd32e31495ab6758486868777a999c3522447d3",
+            Authorization: "Bearer patJMWOqodjoUQncO.89330338665fb59c4ecb238ddfd32e31495ab6758486868777a999c3522447d3",
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),

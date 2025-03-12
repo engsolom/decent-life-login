@@ -121,5 +121,13 @@
   [dir="rtl"] .facebook-login-button:hover::after {
     @apply scale-x-100;
   }
-}
 
+  /* Card shadow for more professional look */
+  .card-shadow {
+    @apply shadow-md shadow-black/5 transition-shadow duration-300;
+  }
+  
+  .card-shadow:hover {
+    @apply shadow-lg shadow-black/10;
+  }
+}

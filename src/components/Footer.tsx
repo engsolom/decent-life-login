@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Award, ExternalLink } from 'lucide-react';
+import { Award, ExternalLink, CheckCircle } from 'lucide-react';
 
 const Footer = () => {
   return (

